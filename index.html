@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-assets>
+            <img src="net.jpg" id="netimg">
+            <img src="soccerball.jpg" id="soccerball">
+            <audio src="https://cdn.aframe.io/basic-guide/audio/backgroundnoise.wav" autoplay preload></audio>
+            <a-asset-item id="goal-obj" src="goal-obj/goal.obj"></a-asset-item>
+            <a-asset-item id="goal-mtl" src="goal-obj/goal.mtl"></a-asset-item>
+        </a-assets>
+        <!--Build our background and our floor-->
+        <a-plane static-body position="0 0 -4" rotation="-90 0 0" width="100" height="100" color="#7BC8A4"></a-plane>
+        <a-sky color="#ECECEC"></a-sky>
+
+        <!--Build three obstacles as static bodies so we can stand on them-->
+        <a-entity obj-model="obj: #goal-obj; mtl: #goal-mtl" scale="1 1 1" static-body position="20 0 -20" rotation="0 0 0"></a-entity>
+        <a-entity id="goal" position="0 0 -10">
+            <a-box static-body position="3 2.25 -3" height="1" width="4.5" depth=".5" rotation="0 0 0" color="#4CC3D9"></a-box>
+            <a-text visible="false" id="score" value="SCORE!" color="red" position="3 2.25 -2" height="40"></a-text>
+            <a-cylinder static-body position="1 0.75 -3" radius="0.25" height="2" color="#FFC65D"></a-cylinder>
+            <a-cylinder static-body position="5 0.75 -3" radius="0.25" height="2" color="#FFC65D"></a-cylinder>
+            <a-box id="net" static-body position="3 0.75 -4" width="4" height="2" depth=".1" src="#netimg"></a-box>
+        </a-entity>
+
+        <!--Build one dynamic body - a soccer ball we can play with-->
+        <a-sphere id="theball" dynamic-body position="4 1.25 -5" radius="0.5" src="#soccerball" mass="1"></a-sphere>
+
+        <!--Make a player/camera entity, and give it the attributes we need it to have in order control camera with mouse, movement with WASD, and jump with spacebar-->
+        <a-entity class="player" id="player" camera jump-ability universal-controls kinematic-body position="1 4 2">
+        </a-entity>
+    </a-scene>
+</body>
+<script type="text/javascript" src="script.js"></script>
+
+</html>
